@@ -40,8 +40,7 @@ def elegir_equipo(jugador, catalogo):
 
     Se guarda una copia de cada criatura para que no se compartan entre jugadores.
     """
-    print(f"
-{jugador.nombre}, elige tus {TAM_EQUIPO} criaturas:")
+    print(f"\n{jugador.nombre}, elige tus {TAM_EQUIPO} criaturas:")
     for numero, criatura in enumerate(catalogo, start=1):
         print(f"  {numero}. {criatura.nombre} ({criatura.tipo}) PS {criatura.ps_max} "
               f"ATQ {criatura.ataque} DEF {criatura.defensa} VEL {criatura.velocidad}")
