@@ -105,6 +105,8 @@ class Combate:
         self.equipos = [equipo1, equipo2]
         self.nombres = [nombre1, nombre2]
         self.activos = [0, 0]  # Índice de la criatura que está luchando en cada equipo
+        self.registro = []     # Todos los mensajes del combate, turno a turno
+        self.numero_turno = 0
 
     def activa(self, i):
         """Criatura que está luchando ahora por el jugador i (0 o 1)."""
@@ -142,6 +144,7 @@ class Combate:
         Devuelve la lista de mensajes del turno.
         """
         acciones = [accion1, accion2]
+        self.numero_turno += 1
         mensajes = []
         for i, (tipo, numero) in enumerate(acciones):
             if tipo == "cambiar":
@@ -152,4 +155,15 @@ class Combate:
             if tipo != "atacar" or atacante.esta_debilitada():
                 continue
             mensajes += usar_habilidad(atacante, atacante.habilidades[numero], defensor)
+        self.registrar(mensajes)
         return mensajes
+
+    def registrar(self, mensajes):
+        """Guarda los mensajes del turno actual en el registro."""
+        self.registro.append(f"--- Turno {self.numero_turno} ---")
+        self.registro += mensajes
+
+    def texto_registro(self):
+        """Devuelve el registro completo del combate como un texto."""
+        return "
+".join(self.registro)
