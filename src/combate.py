@@ -81,3 +81,18 @@ def ejecutar_turno(criatura1, habilidad1, criatura2, habilidad2):
             continue  # Si ya se ha debilitado en este turno no actúa
         mensajes += usar_habilidad(atacante, habilidades[i], defensor)
     return mensajes
+
+
+def cambiar_criatura(equipo, activo, nuevo):
+    """Comprueba el cambio de criatura y devuelve el índice de la nueva activa.
+
+    equipo: lista de criaturas; activo: índice de la actual; nuevo: índice elegido.
+    Lanza ValueError si el cambio no es posible.
+    """
+    if nuevo < 0 or nuevo >= len(equipo):
+        raise ValueError("Esa criatura no existe.")
+    if nuevo == activo:
+        raise ValueError(f"{equipo[nuevo].nombre} ya está en combate.")
+    if equipo[nuevo].esta_debilitada():
+        raise ValueError(f"{equipo[nuevo].nombre} está debilitada.")
+    return nuevo
