@@ -1,0 +1,9 @@
+nombre,tipo,ps,ataque,defensa,velocidad
+Llamín,Fuego,90,60,45,65
+Ignaro,Fuego,110,75,55,40
+Aquilo,Agua,100,55,60,50
+Marilla,Agua,85,65,45,70
+Hojín,Planta,95,55,55,45
+Florón,Planta,105,65,60,35
+Chispín,Eléctrico,80,70,40,90
+Pelusón,Normal,120,60,50,55
