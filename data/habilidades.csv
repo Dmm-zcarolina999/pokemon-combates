@@ -1,0 +1,13 @@
+nombre,tipo,poder,precision,pp
+Ascuas,Fuego,40,100,25
+Llamarada,Fuego,90,85,5
+Burbuja,Agua,40,100,25
+Hidrobomba,Agua,90,80,5
+Latigazo,Planta,45,100,25
+Rayo Solar,Planta,90,85,5
+Impactrueno,Eléctrico,40,100,25
+Trueno,Eléctrico,90,70,5
+Placaje,Normal,40,100,35
+Arañazo,Normal,40,100,35
+Golpe Fuerte,Normal,70,90,15
+Derribo,Normal,90,85,10
