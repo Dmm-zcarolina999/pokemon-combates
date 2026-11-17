@@ -1,4 +1,5 @@
 # jugador.py - Clase Jugador y selección de equipo.
+import copy
 
 TAM_EQUIPO = 3  # Número de criaturas por equipo
 
@@ -23,3 +24,32 @@ class Jugador:
     def ha_perdido(self):
         """True si todas las criaturas del equipo están debilitadas."""
         return self.equipo_completo() and all(c.esta_debilitada() for c in self.equipo)
+
+
+def pedir_numero(texto, minimo, maximo):
+    """Pide un número entre minimo y maximo (ambos incluidos) hasta que sea válido."""
+    while True:
+        respuesta = input(texto).strip()
+        if respuesta.isdigit() and minimo <= int(respuesta) <= maximo:
+            return int(respuesta)
+        print(f"Escribe un número entre {minimo} y {maximo}.")
+
+
+def elegir_equipo(jugador, catalogo):
+    """Deja que el jugador elija sus 3 criaturas del catálogo por número.
+
+    Se guarda una copia de cada criatura para que no se compartan entre jugadores.
+    """
+    print(f"
+{jugador.nombre}, elige tus {TAM_EQUIPO} criaturas:")
+    for numero, criatura in enumerate(catalogo, start=1):
+        print(f"  {numero}. {criatura.nombre} ({criatura.tipo}) PS {criatura.ps_max} "
+              f"ATQ {criatura.ataque} DEF {criatura.defensa} VEL {criatura.velocidad}")
+    elegidas = []
+    while len(elegidas) < TAM_EQUIPO:
+        numero = pedir_numero(f"Criatura {len(elegidas) + 1}/{TAM_EQUIPO}: ", 1, len(catalogo))
+        if numero in elegidas:
+            print("Ya has elegido esa criatura.")
+            continue
+        elegidas.append(numero)
+        jugador.agregar_criatura(copy.deepcopy(catalogo[numero - 1]))
