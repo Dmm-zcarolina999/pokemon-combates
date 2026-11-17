@@ -27,6 +27,25 @@ class Criatura:
         return (f"{self.nombre} ({self.tipo}) PS {self.ps}/{self.ps_max} "
                 f"ATQ {self.ataque} DEF {self.defensa} VEL {self.velocidad}")
 
+    def esta_debilitada(self):
+        """Una criatura está debilitada cuando se queda sin PS."""
+        return self.ps <= 0
+
+    def recibir_dano(self, cantidad):
+        """Resta PS (sin bajar de 0) y devuelve el daño realmente recibido."""
+        perdido = min(max(cantidad, 0), self.ps)
+        self.ps -= perdido
+        return perdido
+
+    def curar(self, cantidad):
+        """Suma PS (sin pasar del máximo) y devuelve lo que se ha curado.
+        Una criatura debilitada no se puede curar."""
+        if self.esta_debilitada():
+            return 0
+        curado = min(max(cantidad, 0), self.ps_max - self.ps)
+        self.ps += curado
+        return curado
+
 
 def cargar_criaturas(ruta=None):
     """Lee data/criaturas.csv y devuelve una lista de objetos Criatura."""
