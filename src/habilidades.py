@@ -1,4 +1,8 @@
 # habilidades.py - Clase Habilidad y carga del catálogo.
+import csv
+import os
+
+RUTA_DATOS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data")
 
 
 class Habilidad:
@@ -16,3 +20,16 @@ class Habilidad:
         """Texto para mostrar la habilidad por pantalla."""
         return (f"{self.nombre} ({self.tipo}) Poder {self.poder} "
                 f"Prec {self.precision}% PP {self.pp}/{self.pp_max}")
+
+
+def cargar_habilidades(ruta=None):
+    """Lee data/habilidades.csv y devuelve un diccionario {nombre: Habilidad}."""
+    if ruta is None:
+        ruta = os.path.join(RUTA_DATOS, "habilidades.csv")
+    habilidades = {}
+    with open(ruta, newline="", encoding="utf-8") as archivo:
+        for fila in csv.DictReader(archivo):
+            habilidades[fila["nombre"]] = Habilidad(
+                fila["nombre"], fila["tipo"], int(fila["poder"]),
+                int(fila["precision"]), int(fila["pp"]))
+    return habilidades
