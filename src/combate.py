@@ -165,5 +165,4 @@ class Combate:
 
     def texto_registro(self):
         """Devuelve el registro completo del combate como un texto."""
-        return "
-".join(self.registro)
+        return "\n".join(self.registro)
