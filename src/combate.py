@@ -1,4 +1,7 @@
 # combate.py - Motor de combate: cálculo de daño y turnos.
+import csv
+import datetime
+import os
 import random
 
 from habilidades import Habilidad
@@ -166,3 +169,28 @@ class Combate:
     def texto_registro(self):
         """Devuelve el registro completo del combate como un texto."""
         return "\n".join(self.registro)
+
+
+RUTA_HISTORIAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "historial.csv")
+CABECERA_HISTORIAL = ["fecha", "jugador1", "jugador2", "ganador", "turnos"]
+
+
+def guardar_historial(combate, ruta=RUTA_HISTORIAL):
+    """Añade una fila al historial con el resultado de un combate terminado."""
+    es_nuevo = not os.path.exists(ruta) or os.path.getsize(ruta) == 0
+    with open(ruta, "a", newline="", encoding="utf-8") as archivo:
+        escritor = csv.writer(archivo)
+        if es_nuevo:
+            escritor.writerow(CABECERA_HISTORIAL)
+        escritor.writerow([
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+            combate.nombres[0], combate.nombres[1],
+            combate.nombres[combate.ganador()], combate.numero_turno])
+
+
+def leer_historial(ruta=RUTA_HISTORIAL):
+    """Devuelve la lista de combates guardados (cada uno es un diccionario)."""
+    if not os.path.exists(ruta):
+        return []
+    with open(ruta, newline="", encoding="utf-8") as archivo:
+        return list(csv.DictReader(archivo))

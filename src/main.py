@@ -1,6 +1,7 @@
 # main.py - Punto de entrada del juego.
 # Se ejecuta con: python src/main.py
-from combate import Combate, cambiar_criatura, sin_pp
+from combate import (Combate, cambiar_criatura, guardar_historial,
+                     leer_historial, sin_pp)
 from criaturas import cargar_criaturas
 from jugador import Jugador, elegir_equipo, pedir_numero
 
@@ -84,11 +85,19 @@ def jugar():
                 print(f"\n{combate.nombres[i]}, tu criatura está debilitada. Elige otra.")
                 print(combate.cambiar(i, pedir_sustituto(combate, i)))
     print(f"\n¡{combate.nombres[combate.ganador()]} gana el combate en {combate.numero_turno} turnos!")
+    guardar_historial(combate)
 
 
 def ver_historial():
-    """Muestra el historial de combates (se completa más adelante)."""
-    print("\nEl historial todavía no está disponible.")
+    """Muestra los combates guardados en data/historial.csv."""
+    combates = leer_historial()
+    print("
+--- Historial de combates ---")
+    if not combates:
+        print("Todavía no se ha jugado ningún combate.")
+    for c in combates:
+        print(f"{c['fecha']} | {c['jugador1']} vs {c['jugador2']} | "
+              f"Gana {c['ganador']} ({c['turnos']} turnos)")
 
 
 def menu():
