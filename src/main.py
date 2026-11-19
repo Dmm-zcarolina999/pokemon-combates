@@ -91,8 +91,7 @@ def jugar():
 def ver_historial():
     """Muestra los combates guardados en data/historial.csv."""
     combates = leer_historial()
-    print("
---- Historial de combates ---")
+    print("\n--- Historial de combates ---")
     if not combates:
         print("Todavía no se ha jugado ningún combate.")
     for c in combates:
