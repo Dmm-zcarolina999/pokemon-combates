@@ -61,7 +61,11 @@ def pedir_sustituto(combate, i, permitir_volver=False):
 
 def jugar():
     """Partida de dos jugadores en el mismo teclado."""
-    catalogo = cargar_criaturas()
+    try:
+        catalogo = cargar_criaturas()
+    except (OSError, KeyError, ValueError) as error:
+        print(f"No se pudo cargar el catálogo de data/: {error}")
+        return
     jugadores = []
     for n in (1, 2):
         nombre = input(f"\nNombre del jugador {n}: ").strip() or f"Jugador {n}"
@@ -90,7 +94,11 @@ def jugar():
 
 def ver_historial():
     """Muestra los combates guardados en data/historial.csv."""
-    combates = leer_historial()
+    try:
+        combates = leer_historial()
+    except (OSError, KeyError) as error:
+        print(f"No se pudo leer el historial: {error}")
+        return
     print("\n--- Historial de combates ---")
     if not combates:
         print("Todavía no se ha jugado ningún combate.")
@@ -121,7 +129,11 @@ def menu():
 
 def main():
     """Función principal del programa."""
-    menu()
+    try:
+        menu()
+    except (EOFError, KeyboardInterrupt):
+        # El usuario ha cerrado la entrada (Ctrl+C / Ctrl+D)
+        print("\nPrograma terminado.")
 
 
 if __name__ == "__main__":
