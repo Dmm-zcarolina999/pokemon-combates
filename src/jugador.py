@@ -32,7 +32,7 @@ def pedir_numero(texto, minimo, maximo):
         respuesta = input(texto).strip()
         if respuesta.isdigit() and minimo <= int(respuesta) <= maximo:
             return int(respuesta)
-        print(f"Escribe un número entre {minimo} y {maximo}.")
+        print(f"Entrada no válida. Escribe un número entre {minimo} y {maximo}.")
 
 
 def elegir_equipo(jugador, catalogo):
